@@ -486,6 +486,10 @@ open class TerminalView: NSView, NSUserInterfaceValidations, TerminalDelegate {
     var _lineSpacing: CGFloat = 1.0
     var terminal: Terminal!
 
+    /// Ryno: the emulator behind this view, for hosts that read the screen
+    /// or register OSC handlers. Take `terminalLock` when touching its state.
+    public func getTerminal() -> Terminal { terminal }
+
     /// Marked (uncommitted) text from an input source (IME, dictation, etc.).
     private var markedTextStorage: NSAttributedString?
     private var markedSelectedRange: NSRange = NSRange(location: NSNotFound, length: 0)
