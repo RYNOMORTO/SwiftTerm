@@ -490,6 +490,13 @@ open class TerminalView: NSView, NSUserInterfaceValidations, TerminalDelegate {
     /// or register OSC handlers. Take `terminalLock` when touching its state.
     public func getTerminal() -> Terminal { terminal }
 
+    /// Size of one character cell in points (Ryno: the block overlay lines
+    /// itself up with the grid). Zero until the font is set up.
+    public var rynoCellSize: CGSize {
+        guard let cell = cellDimension else { return .zero }
+        return CGSize(width: cell.width, height: cell.height)
+    }
+
     /// Marked (uncommitted) text from an input source (IME, dictation, etc.).
     private var markedTextStorage: NSAttributedString?
     private var markedSelectedRange: NSRange = NSRange(location: NSNotFound, length: 0)
