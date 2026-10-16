@@ -10013,3 +10013,16 @@ public extension TerminalDelegate {
     func createImage (source: Terminal, data: TerminalData, width: ImageSizeRequest, height: ImageSizeRequest, preserveAspectRatio: Bool) {
     }    
 }
+
+// MARK: - Ryno additions
+
+extension Terminal {
+    /// Ryno: the last `count` lines of the buffer (scrollback and screen) as
+    /// plain text, oldest first. Hold `terminalLock` while calling.
+    public func recentLines(_ count: Int) -> [String] {
+        let end = min(buffer.lines.count, buffer.yBase + rows)
+        let start = max(0, end - max(0, count))
+        guard start < end else { return [] }
+        return (start..<end).map { buffer.lines[$0].translateToString(trimRight: true) }
+    }
+}
